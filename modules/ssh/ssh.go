@@ -111,6 +111,8 @@ func handleServerConn(keyID string, chans <-chan ssh.NewChannel) {
 					ch.SendRequest("exit-status", false, []byte{0, 0, 0, 0})
 					return
 				default:
+					log.Debug("SSH: Denying unsupported request type: %v", req.Type)
+					req.Reply(false, nil)
 				}
 			}
 		}(reqs)
